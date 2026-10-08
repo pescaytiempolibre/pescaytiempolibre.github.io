@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Gestión y tramitación de licencias de caza, pesca, armas, embarcaciones y seguros. Consulta por WhatsApp.">
+<title>Pesca y Tiempo Libre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+body{margin:0}
+/* Layout: una columna tipo cartel; cabecera de marca, lista de trámites desplegables con mini formulario que abre WhatsApp */
+:root{
+  --bg:#f3f4ec; --surface:#ffffff; --fg:#1d2a1f; --muted:#5b6a5c; --line:#d9ddcf;
+  --forest:#1f4d2b; --forest-ink:#ffffff; --sun:#f2c615; --wa:#1f9d55; --wa-ink:#ffffff;
+  --c-caza:#2f7d3a; --c-armas:#c4561c; --c-pesca:#1f5fa8; --c-barco:#137a7f; --c-aves:#7a8a1e; --c-doc:#6b3a8e; --c-seg:#a33a4a; --c-alta:#3d6b2f;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121a14; --surface:#1a251c; --fg:#e8eee4; --muted:#a3b2a3; --line:#2c3a2e;
+  --forest:#173d22; --sun:#f2c615; --wa:#25b463; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121a14; --surface:#1a251c; --fg:#e8eee4; --muted:#a3b2a3; --line:#2c3a2e;
+  --forest:#173d22; --sun:#f2c615; --wa:#25b463; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5}
+.wrap{max-width:640px;margin:0 auto;padding-inline:16px;padding-block:0 40px}
+header{background:var(--forest);color:var(--forest-ink);margin-inline:-16px;padding:28px 20px 24px}
+.eyebrow{font-family:var(--display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.95rem;opacity:.85}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2.4rem,11vw,3.4rem);line-height:.95;margin:.2em 0 .25em;text-wrap:balance}
+h1 span{color:var(--sun);display:block}
+.tags{font-family:var(--display);font-weight:600;font-size:1.1rem;letter-spacing:.06em}
+.lead{margin:14px 0 0;max-width:34ch;opacity:.92}
+h2{font-family:var(--display);font-weight:800;font-size:1.7rem;margin:28px 0 4px}
+.hint{color:var(--muted);margin:0 0 14px}
+.list{display:flex;flex-direction:column;gap:10px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:12px 14px}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:3px solid var(--sun);outline-offset:-3px}
+.ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+.st{min-width:0}
+.st b{display:block;font-weight:700;line-height:1.25}
+.st small{color:var(--muted);font-size:.9rem}
+.chev{width:22px;height:22px;transition:transform .2s;color:var(--muted)}
+details[open] .chev{transform:rotate(180deg)}
+.body{padding:2px 16px 16px;border-top:1px solid var(--line)}
+.body h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:14px 0 6px}
+.body ul{margin:0;padding-left:1.1em}
+.body li{margin:3px 0}
+form{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+label{font-size:.9rem;font-weight:600;display:flex;flex-direction:column;gap:4px}
+input,select{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%}
+input:focus,select:focus{outline:2px solid var(--wa);border-color:transparent}
+.wa{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--wa);color:var(--wa-ink);text-decoration:none;font-weight:700;padding:13px 16px;border-radius:999px;font-size:1.05rem}
+.wa:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.wa svg{width:22px;height:22px;flex:none}
+.note{font-size:.85rem;color:var(--muted);margin:0}
+.contact{margin-top:30px;background:var(--forest);color:var(--forest-ink);border-radius:12px;padding:20px}
+.contact h2{margin:0 0 6px;color:var(--sun)}
+.phones{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:10px}
+.phone{font-family:var(--display);font-weight:800;font-size:1.9rem;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:#fff;text-decoration:none}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:22px}
+@media (prefers-reduced-motion:reduce){.chev{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Servicio de gestión y tramitación</div>
+    <h1>Pesca y<span>Tiempo Libre</span></h1>
+    <div class="tags">CAZA · PESCA · ARMAS · EMBARCACIONES</div>
+    <p class="lead">Elige tu trámite, mira qué necesitas y mándanos tu consulta por WhatsApp con un toque. Sin compromiso.</p>
+  </header>
+
+  <h2>¿Qué necesitas?</h2>
+  <p class="hint">Toca un trámite para ver la información.</p>
+  <div class="list" id="list"></div>
+
+  <section class="contact">
+    <h2>¿No ves tu trámite?</h2>
+    <p style="margin:0">Escríbenos o llámanos y te decimos cómo hacerlo. Nos encargamos de la gestión y tramitación de tu documentación.</p>
+    <div class="phones">
+      <a class="phone" href="https://wa.me/34627593596?text=Hola%2C%20quer%C3%ADa%20informaci%C3%B3n%20sobre%20un%20tr%C3%A1mite">627 593 596</a>
+      <a class="phone" href="https://wa.me/34666497390?text=Hola%2C%20quer%C3%ADa%20informaci%C3%B3n%20sobre%20un%20tr%C3%A1mite">666 497 390</a>
+    </div>
+  </section>
+  <footer>Pesca y Tiempo Libre · Andalucía y otras comunidades autónomas · Consulta sin compromiso</footer>
+</div>
+
+<script>
+const PHONE = "34627593596";
+const S = [
+ {id:"caza", code:"CZ", color:"--c-caza", title:"Licencia de caza", sub:"Nueva o renovación · Andalucía y otras CCAA",
+  info:["Renovación de tu licencia antes de que caduque.","Licencias en Andalucía y en otras comunidades autónomas."],
+  docs:["DNI en vigor","Licencia anterior (si es renovación)","Seguro obligatorio de cazador en vigor"], opts:["Renovación","Primera licencia"]},
+ {id:"inter", code:"IC", color:"--c-caza", title:"Licencia intercomunitaria", sub:"Caza o pesca en varias comunidades",
+  info:["Una sola licencia para cazar o pescar en las comunidades adheridas.","Te confirmamos si te conviene según dónde vayas a cazar o pescar."],
+  docs:["DNI en vigor","Licencia actual, si tienes"], opts:["Caza","Pesca"]},
+ {id:"pesca", code:"PS", color:"--c-pesca", title:"Licencia de pesca", sub:"Nueva o renovación",
+  info:["Renovación y alta de licencias de pesca continental."],
+  docs:["DNI en vigor","Licencia anterior (si es renovación)"], opts:["Renovación","Primera licencia"]},
+ {id:"alta", code:"AN", color:"--c-alta", title:"Altas nuevas de cazadores y pescadores", sub:"Si es tu primera vez",
+  info:["Te guiamos en todo el proceso para conseguir tu primera licencia.","Te explicamos los requisitos previos que pide tu comunidad."],
+  docs:["DNI en vigor"], opts:["Cazador","Pescador"]},
+ {id:"armas", code:"AR", color:"--c-armas", title:"Armas e intervención de armas", sub:"Licencias, guías y documentación",
+  info:["Gestión de licencias de armas y su renovación.","Todas las gestiones ante la Intervención de Armas."],
+  docs:["DNI en vigor","Licencia o guía actual, si es renovación o cambio"], opts:["Licencia nueva","Renovación","Otra gestión"]},
+ {id:"barco", code:"EM", color:"--c-barco", title:"Embarcaciones", sub:"Todos los trámites",
+  info:["Matriculación, cambios de titularidad y documentación de embarcaciones.","Cualquier otro trámite relacionado con tu barco."],
+  docs:["DNI en vigor","Documentación de la embarcación, si ya la tienes"], opts:["Matriculación","Cambio de titular","Otro trámite"]},
+ {id:"aves", code:"AV", color:"--c-aves", title:"Caza de aves acuáticas (patos)", sub:"Permisos y documentación",
+  info:["Tramitación de lo necesario para la caza de aves acuáticas."],
+  docs:["DNI en vigor","Licencia de caza en vigor"], opts:["Información"]},
+ {id:"nira", code:"NI", color:"--c-doc", title:"NIRA y otros documentos", sub:"Lo que necesites para estar en regla",
+  info:["Tramitación del NIRA.","Otros documentos relacionados con la caza y la pesca."],
+  docs:["DNI en vigor"], opts:["NIRA","Otro documento"]},
+ {id:"seguro", code:"SG", color:"--c-seg", title:"Seguros de caza y pesca", sub:"Contratación y renovación",
+  info:["Te ayudamos con el seguro que necesitas para cazar o pescar."],
+  docs:["DNI en vigor"], opts:["Seguro de caza","Seguro de pesca"]},
+];
+const chev='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+const waIco='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.7-.4Z"/></svg>';
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const list=document.getElementById("list");
+S.forEach(s=>{
+  const d=document.createElement("details"); d.id=s.id;
+  d.innerHTML=`<summary><span class="ico" style="background:var(${s.color})">${s.code}</span><span class="st"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></span>${chev}</summary>
+  <div class="body">
+    <h3>Qué hacemos</h3><ul>${s.info.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+    <h3>Ten a mano</h3><ul>${s.docs.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+    <form novalidate>
+      <label for="${s.id}-tipo">Qué quieres hacer<select id="${s.id}-tipo">${s.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select></label>
+      <label for="${s.id}-nombre">Tu nombre<input id="${s.id}-nombre" autocomplete="name" placeholder="Ej.: Juan García"></label>
+      <label for="${s.id}-loc">Localidad<input id="${s.id}-loc" autocomplete="address-level2" placeholder="Ej.: Sevilla"></label>
+      <a class="wa" target="_blank" rel="noopener">${waIco}Enviar consulta por WhatsApp</a>
+      <p class="note">Se abrirá WhatsApp con tu mensaje ya escrito. Solo tienes que pulsar enviar. Te diremos exactamente qué documentación necesitas en tu caso.</p>
+    </form>
+  </div>`;
+  list.appendChild(d);
+  const f=d.querySelector("form"), a=d.querySelector(".wa");
+  const upd=()=>{
+    const t=f.querySelector("select").value, n=f.querySelector(`#${s.id}-nombre`).value.trim(), l=f.querySelector(`#${s.id}-loc`).value.trim();
+    let m=`Hola, quería información sobre: ${s.title} (${t}).`;
+    if(n) m+=`\nMe llamo ${n}.`; if(l) m+=`\nSoy de ${l}.`;
+    a.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(m)}`;
+  };
+  f.addEventListener("input",upd); f.addEventListener("submit",e=>e.preventDefault()); upd();
+});
+const h=location.hash.slice(1); const t=h&&document.getElementById(h); if(t&&t.tagName==="DETAILS"){t.open=true;t.scrollIntoView();}
+</script>
+</body>
+</html>
