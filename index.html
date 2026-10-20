@@ -222,22 +222,22 @@ const PHONE = "34627593596";
 const S = [
  {id:"caza", code:"CZ", color:"--c-caza", title:"Licencia de caza", sub:"Nueva o renovación · Andalucía y otras CCAA",
   info:["Renovación de tu licencia antes de que caduque.","Licencias en Andalucía y en otras comunidades autónomas."],
-  docs:["DNI en vigor","Licencia anterior (si es renovación)","Seguro obligatorio de cazador en vigor"], opts:["Renovación","Primera licencia"]},
+  docs:["Renovación: foto de tu licencia actual, si la tienes","Primera licencia: foto del DNI por las dos caras","Domicilio completo, para enviarte la licencia"], opts:["Renovación","Primera licencia"]},
  {id:"inter", code:"IC", color:"--c-caza", title:"Licencia intercomunitaria", sub:"Caza o pesca en varias comunidades",
   info:["Una sola licencia para cazar o pescar en las comunidades adheridas.","Te confirmamos si te conviene según dónde vayas a cazar o pescar."],
-  docs:["DNI en vigor","Licencia actual, si tienes"], opts:["Caza","Pesca"]},
+  docs:["Foto de tu licencia actual","Domicilio completo"], opts:["Caza","Pesca"]},
  {id:"pesca", code:"PS", color:"--c-pesca", title:"Licencia de pesca", sub:"Nueva o renovación",
   info:["Renovación y alta de licencias de pesca continental."],
-  docs:["DNI en vigor","Licencia anterior (si es renovación)"], opts:["Renovación","Primera licencia"]},
+  docs:["Renovación: foto de tu licencia actual","Primera licencia: foto del DNI por las dos caras","Domicilio completo"], opts:["Renovación","Primera licencia"]},
  {id:"alta", code:"AN", color:"--c-alta", title:"Altas nuevas de cazadores y pescadores", sub:"Si es tu primera vez",
   info:["Te guiamos en todo el proceso para conseguir tu primera licencia.","Te explicamos los requisitos previos que pide tu comunidad."],
-  docs:["DNI en vigor"], opts:["Cazador","Pescador"]},
+  docs:["Foto del DNI por las dos caras","Domicilio completo"], opts:["Cazador","Pescador"]},
  {id:"armas", code:"AR", color:"--c-armas", title:"Armas e intervención de armas", sub:"Licencias, guías y documentación",
   info:["Gestión de licencias de armas y su renovación.","Todas las gestiones ante la Intervención de Armas."],
-  docs:["DNI en vigor","Licencia o guía actual, si es renovación o cambio"], opts:["Licencia nueva","Renovación","Otra gestión"]},
- {id:"barco", code:"EM", color:"--c-barco", title:"Embarcaciones", sub:"Todos los trámites",
-  info:["Matriculación, cambios de titularidad y documentación de embarcaciones.","Cualquier otro trámite relacionado con tu barco."],
-  docs:["DNI en vigor","Documentación de la embarcación, si ya la tienes"], opts:["Matriculación","Cambio de titular","Otro trámite"]},
+  docs:["Foto del DNI por las dos caras","NIRA"], opts:["Licencia nueva","Renovación","Otra gestión"]},
+ {id:"barco", code:"EM", color:"--c-barco", title:"Embarcaciones", sub:"Patos de pesca, barcas y motores",
+  info:["Documentación de patos de pesca, con o sin motor, y de embarcaciones.","Cualquier otro trámite relacionado con tu barco."],
+  docs:["Foto del DNI por las dos caras","Domicilio completo","Pato sin motor: marca, modelo y medida","Pato con motor o embarcación: marca, modelo, medida y número de serie","Motor, si lo tiene: marca, modelo, número de serie y potencia (CV o libras)","Pantano donde vas a hacer la actividad"], opts:["Pato sin motor","Pato con motor","Embarcación","Otro trámite"]},
  {id:"aves", code:"AV", color:"--c-aves", title:"Caza de aves acuáticas (patos)", sub:"Permisos y documentación",
   info:["Tramitación de lo necesario para la caza de aves acuáticas."],
   docs:["DNI en vigor","Licencia de caza en vigor"], opts:["Información"]},
@@ -246,7 +246,7 @@ const S = [
   docs:["DNI en vigor"], opts:["NIRA","Otro documento"]},
  {id:"seguro", code:"SG", color:"--c-seg", title:"Seguros de caza y pesca", sub:"Contratación y renovación",
   info:["Te ayudamos con el seguro que necesitas para cazar o pescar."],
-  docs:["DNI en vigor"], opts:["Seguro de caza","Seguro de pesca"]},
+  docs:["Foto del DNI por las dos caras","Domicilio completo"], opts:["Seguro de caza","Seguro de pesca"]},
 ];
 const chev='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
 const waIco='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.7-.4Z"/></svg>';
@@ -257,7 +257,7 @@ S.forEach(s=>{
   d.innerHTML=`<summary><span class="ico" style="background:var(${s.color})">${s.code}</span><span class="st"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></span>${chev}</summary>
   <div class="body">
     <h3>Qué hacemos</h3><ul>${s.info.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
-    <h3>Ten a mano</h3><ul>${s.docs.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+    <h3>Qué necesitamos</h3><ul>${s.docs.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
     <form novalidate>
       <label for="${s.id}-tipo">Qué quieres hacer<select id="${s.id}-tipo">${s.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select></label>
       <label for="${s.id}-nombre">Tu nombre<input id="${s.id}-nombre" autocomplete="name" placeholder="Ej.: Juan García"></label>
