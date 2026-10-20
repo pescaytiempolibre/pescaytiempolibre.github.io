@@ -104,17 +104,6 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:22px}
 .closed-msg{margin-top:16px;padding:14px;border-radius:8px;background:var(--bg);border:1px dashed var(--line)}
 .closed-msg b{color:var(--closed)}
 .alt{font-size:.88rem;color:var(--muted);margin:0}
-.up{display:flex;flex-direction:column;gap:8px}
-.up-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.up-btn{flex-direction:row;align-items:center;justify-content:center;gap:6px;border:1.5px dashed var(--line);border-radius:10px;padding:12px;cursor:pointer;text-align:center;font-weight:700;background:var(--bg)}
-.up-btn small{font-weight:400;color:var(--muted)}
-.up-input:focus-visible + .thumbs, .up-btn:hover{border-color:var(--wa)}
-.up:focus-within .up-btn{outline:2px solid var(--wa);outline-offset:2px}
-.thumbs{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.thumbs li{position:relative;width:64px;height:64px;border-radius:8px;overflow:hidden;background:var(--bg);border:1px solid var(--line)}
-.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-.thumbs .pdf{display:grid;place-items:center;width:100%;height:100%;font-weight:800;color:var(--muted)}
-.thumbs .rm{position:absolute;top:2px;right:2px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:22px;padding:0;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.chev{transition:none}}
 </style>
 </head>
@@ -273,54 +262,19 @@ S.forEach(s=>{
       <label for="${s.id}-tipo">Qué quieres hacer<select id="${s.id}-tipo">${s.opts.map(o=>`<option>${esc(o)}</option>`).join("")}</select></label>
       <label for="${s.id}-nombre">Tu nombre<input id="${s.id}-nombre" autocomplete="name" placeholder="Ej.: Juan García"></label>
       <label for="${s.id}-loc">Localidad<input id="${s.id}-loc" autocomplete="address-level2" placeholder="Ej.: Sevilla"></label>
-      <div class="up">
-        <label class="up-btn" for="${s.id}-fotos">Añadir fotos de la documentación <small>(opcional)</small></label>
-        <input class="up-input" id="${s.id}-fotos" type="file" accept="image/*,application/pdf" multiple>
-        <ul class="thumbs" hidden></ul>
-      </div>
-      <a class="wa" target="_blank" rel="noopener">${waIco}<span class="wa-txt">Enviar consulta por WhatsApp</span></a>
-      <p class="note">Se abrirá WhatsApp con tu mensaje ya escrito. Solo tienes que pulsar enviar. Te diremos exactamente qué documentación necesitas en tu caso.</p>
+      <a class="wa" target="_blank" rel="noopener">${waIco}Enviar consulta por WhatsApp</a>
+      <p class="note">Se abrirá el chat de WhatsApp con tu mensaje ya escrito. Envíalo y, en el mismo chat, adjunta con el clip 📎 las fotos de lo que pone en «Qué necesitamos».</p>
     </form>
   </div>`;
   list.appendChild(d);
-  const f=d.querySelector("form"), a=d.querySelector(".wa"), aTxt=d.querySelector(".wa-txt"), note=d.querySelector(".note");
-  const inp=d.querySelector(".up-input"), thumbs=d.querySelector(".thumbs");
-  let files=[], msg="";
-  const canShareFiles=fl=>{try{return !!(navigator.canShare&&navigator.share&&navigator.canShare({files:fl}))}catch(e){return false}};
-  const NOTE_BASE="Se abrirá WhatsApp con tu mensaje ya escrito. Solo tienes que pulsar enviar. Te diremos exactamente qué documentación necesitas en tu caso.";
+  const f=d.querySelector("form"), a=d.querySelector(".wa");
   const upd=()=>{
     const t=f.querySelector("select").value, n=f.querySelector(`#${s.id}-nombre`).value.trim(), l=f.querySelector(`#${s.id}-loc`).value.trim();
     let m=`Hola, quería información sobre: ${s.title} (${t}).`;
     if(n) m+=`\nMe llamo ${n}.`; if(l) m+=`\nSoy de ${l}.`;
-    if(files.length) m+=`\nTe envío ${files.length} ${files.length>1?"fotos":"foto"} de la documentación.`;
-    msg=m;
+    m+=`\nAhora te mando las fotos de la documentación.`;
     a.href=`https://wa.me/${PHONE}?text=${encodeURIComponent(m)}`;
-    if(files.length && canShareFiles(files)){
-      aTxt.textContent="Enviar consulta y fotos por WhatsApp";
-      note.textContent="Se abrirá el menú de compartir: elige WhatsApp y luego el chat de Pesca y Tiempo Libre (627 593 596). El mensaje también queda copiado por si hay que pegarlo.";
-    } else if(files.length){
-      aTxt.textContent="Enviar consulta por WhatsApp";
-      note.textContent="Desde este dispositivo no se pueden enviar las fotos directamente. Al abrirse el chat, adjúntalas con el clip.";
-    } else { aTxt.textContent="Enviar consulta por WhatsApp"; note.textContent=NOTE_BASE; }
   };
-  const drawThumbs=()=>{
-    thumbs.innerHTML=""; thumbs.hidden=!files.length;
-    files.forEach((fl,i)=>{
-      const li=document.createElement("li");
-      if(fl.type.startsWith("image/")){const im=document.createElement("img");im.alt="";im.src=URL.createObjectURL(fl);im.onload=()=>URL.revokeObjectURL(im.src);li.appendChild(im);}
-      else{const sp=document.createElement("span");sp.className="pdf";sp.textContent="PDF";li.appendChild(sp);}
-      const x=document.createElement("button");x.type="button";x.className="rm";x.setAttribute("aria-label","Quitar "+fl.name);x.textContent="×";
-      x.onclick=()=>{files.splice(i,1);drawThumbs();upd();};
-      li.appendChild(x); thumbs.appendChild(li);
-    });
-  };
-  inp.addEventListener("change",()=>{files=files.concat([...inp.files]).slice(0,10);inp.value="";drawThumbs();upd();});
-  a.addEventListener("click",e=>{
-    if(!files.length||!canShareFiles(files)) return;
-    e.preventDefault();
-    try{navigator.clipboard&&navigator.clipboard.writeText(msg).catch(()=>{})}catch(_){}
-    navigator.share({files,text:msg}).catch(err=>{ if(err&&err.name!=="AbortError") window.open(a.href,"_blank"); });
-  });
   f.addEventListener("input",upd); f.addEventListener("submit",e=>e.preventDefault()); upd();
 });
 const h=location.hash.slice(1); const t=h&&document.getElementById(h); if(t&&t.tagName==="DETAILS"){t.open=true;t.scrollIntoView();}
